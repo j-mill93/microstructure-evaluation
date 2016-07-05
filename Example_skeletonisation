@@ -15,7 +15,7 @@
  rows_to_remove = any(extracted_centres==2, 2);
  extracted_centres(rows_to_remove,:) = [];
  
-Skel_WRV = extract_WRV(WRVoronoi(extracted_centres(:,1),extracted_centres(:,2),1.5),8) %# Calculate the Warnken-Reed-PDAS for each of the dendrite centres in the array using an alpha value of 1.5. Then extract the data.
+Skel_WRV = extract_WRV(WRVoronoi(extracted_centres(:,2),extracted_centres(:,3),1.5),8) %# Calculate the Warnken-Reed-PDAS for each of the dendrite centres in the array using an alpha value of 1.5. Then extract the data.
  
 PDAS_Image(test_image,Skel_WRV(:,4),1,Skel_WRV(:,1),Skel_WRV(:,2),30); %# Display graphically the PDAS across the microstructure.
  
