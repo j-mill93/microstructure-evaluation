@@ -1,0 +1,21 @@
+
+%# Example of the skeletonisation and centre assigning method 
+%# Copy and paste into workspace 
+
+%# Load Slice_2_extraction_background.png into workspace
+ 
+ test_image = cdata; %# Save cdata from Slice_2_extraction_background.png to test_image handle
+ 
+ skeletonisation = center_dendrite_structure(test_image,15,'plot'); %# run skeletonisation and centre assigning function. Inputs are the test image, a thresholding value used toprevent multiple centres appearing when branch-points appear, and then finally plotting the branch-points over the original microstructure. This shows both the chosen centre of the dendrites (blue) and then also the secondary centres which have not been chosen (yellow). The output of the function is a data structure which gives the co-ordinates of each of the primary and secondary centres for each of the dendrites.
+ 
+ extracted_centres = extract_field(skeletonisation,'field'); %# Extract the data from the data structure.
+ 
+ %# Remove any row from the data which is not a primary centre.
+ 
+ rows_to_remove = any(extracted_centres==2, 2);
+ extracted_centres(rows_to_remove,:) = [];
+ 
+Skel_WRV = extract_WRV(WRVoronoi(extracted_centres(:,1),extracted_centres(:,2),1.5),8) %# Calculate the Warnken-Reed-PDAS for each of the dendrite centres in the array using an alpha value of 1.5. Then extract the data.
+ 
+PDAS_Image(test_image,Skel_WRV(:,4),1,Skel_WRV(:,1),Skel_WRV(:,2),30); %# Display graphically the PDAS across the microstructure.
+ 
